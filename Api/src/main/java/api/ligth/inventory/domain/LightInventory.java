@@ -22,6 +22,9 @@ public class LightInventory extends BaseEntity {
     @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
 
+    @Column(name = "foto_base64", nullable = false,columnDefinition = "TEXT")
+    private String fotoBase64;
+
     @CreationTimestamp
     @Column(name = "fecha_create", nullable = false, updatable = false)
     private OffsetDateTime fechaCreate;

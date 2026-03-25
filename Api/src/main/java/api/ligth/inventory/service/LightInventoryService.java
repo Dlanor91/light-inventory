@@ -14,5 +14,5 @@ public interface LightInventoryService {
 
     LightInventoryResponse created(LightInventoryUpsertRequest request);
 
-    LightInventoryResponse update(LightInventoryUpsertRequest request, Long id);
+    Optional<LightInventoryResponse> update(LightInventoryUpsertRequest request, Long id);
 }
