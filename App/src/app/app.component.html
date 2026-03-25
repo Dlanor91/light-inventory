@@ -1,0 +1,104 @@
+<main class="layout">
+  <header class="layout__header">
+    <h1>Inventario de Luces</h1>
+    <p>Frontend Angular 19 con Angular Material y axios.</p>
+  </header>
+
+  <section class="layout__content">
+    <mat-card appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>Alta de producto</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <fieldset class="form-grid">
+            <legend class="sr-only">Formulario de inventario</legend>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Nombre</mat-label>
+              <input matInput formControlName="nombre" />
+              @if (hasError('nombre')) {
+                <mat-error>Nombre requerido.</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Descripcion</mat-label>
+              <input matInput formControlName="descripcion" />
+              @if (hasError('descripcion')) {
+                <mat-error>Descripcion requerida.</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Cantidad</mat-label>
+              <input matInput type="number" min="1" formControlName="cantidad" />
+              @if (hasError('cantidad')) {
+                <mat-error>Cantidad invalida.</mat-error>
+              }
+            </mat-form-field>
+          </fieldset>
+
+          <section class="file-section">
+            <label class="file-label" for="fotoBase64">Foto (base64)</label>
+            <input id="fotoBase64" type="file" accept="image/*" (change)="onFileSelected($event)" />
+            <small>{{ selectedPhotoLabel }}</small>
+            @if (isConvertingPhoto) {
+              <small>Convirtiendo foto a base64...</small>
+            }
+          </section>
+
+          <footer class="form-actions">
+            <button mat-flat-button color="primary" type="submit" [disabled]="isSaving || isConvertingPhoto || form.invalid">
+              @if (!isSaving && !isConvertingPhoto) {
+                Guardar
+              } @else if (isConvertingPhoto) {
+                Procesando foto...
+              } @else {
+                Guardando...
+              }
+            </button>
+            <button mat-stroked-button type="button" (click)="loadItems()" [disabled]="isLoading">
+              Recargar listado
+            </button>
+          </footer>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <section class="list-section">
+      <header class="list-section__header">
+        <h2>Listado</h2>
+        @if (isLoading) {
+          <mat-spinner diameter="32"></mat-spinner>
+        }
+      </header>
+
+      <ul class="inventory-list">
+        @for (item of items; track trackById($index, item)) {
+          <li>
+            <article class="inventory-item">
+              <header>
+                <h3>{{ item.nombre }}</h3>
+                <p>{{ item.descripcion }}</p>
+              </header>
+              <p><strong>Cantidad:</strong> {{ item.cantidad }}</p>
+              @if (item.fotoBase64) {
+                <figure>
+                  <img [src]="item.fotoBase64" [alt]="'Foto de ' + item.nombre" />
+                  <figcaption>Imagen almacenada en base64.</figcaption>
+                </figure>
+              }
+            </article>
+          </li>
+        } @empty {
+          <li>
+            <article class="inventory-item">
+              <p>No hay elementos en el inventario.</p>
+            </article>
+          </li>
+        }
+      </ul>
+    </section>
+  </section>
+</main>
