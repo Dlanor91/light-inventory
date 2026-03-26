@@ -1,0 +1,98 @@
+<section class="page">
+  <header class="page__header">
+    <a mat-button routerLink="/inventario" class="page__back">
+      <mat-icon aria-hidden="true">arrow_back</mat-icon>
+      Volver al listado
+    </a>
+    <h1>{{ titulo }}</h1>
+    <p>Completa los datos y adjunta una imagen.</p>
+  </header>
+
+  @if (isLoading) {
+    <p class="page__hint" aria-live="polite">Cargando datos del producto…</p>
+  }
+
+  <mat-card appearance="outlined" class="form-card">
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <fieldset class="form-grid" [disabled]="isLoading">
+          <legend class="sr-only">{{ titulo }}</legend>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre</mat-label>
+            <input matInput formControlName="nombre" />
+            @if (hasError("nombre")) {
+              <mat-error>Nombre requerido.</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-grid__full">
+            <mat-label>Descripcion</mat-label>
+            <textarea
+              matInput
+              rows="4"
+              formControlName="descripcion"
+            ></textarea>
+            @if (hasError("descripcion")) {
+              <mat-error>Descripcion requerida.</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Cantidad</mat-label>
+            <input matInput type="number" min="1" formControlName="cantidad" />
+            @if (hasError("cantidad")) {
+              <mat-error>Cantidad invalida.</mat-error>
+            }
+          </mat-form-field>
+        </fieldset>
+
+        <section class="file-section">
+          <label class="file-label" for="fotoBase64">Imagen</label>
+          <input
+            id="fotoBase64"
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event)"
+          />
+          <small>{{ selectedPhotoLabel }}</small>
+          @if (isConvertingPhoto) {
+            <small>Convirtiendo foto…</small>
+          }
+        </section>
+
+        @if (form.controls.fotoBase64.value && !isConvertingPhoto) {
+          <figure class="preview">
+            <img
+              [src]="form.controls.fotoBase64.value"
+              alt="Vista previa de la imagen seleccionada"
+            />
+            <figcaption>Vista previa</figcaption>
+          </figure>
+        }
+
+        <footer class="form-actions">
+          <a mat-stroked-button routerLink="/inventario" type="button"
+            >Cancelar</a
+          >
+          <button
+            mat-flat-button
+            color="primary"
+            type="submit"
+            [disabled]="
+              isSaving || isConvertingPhoto || isLoading || form.invalid
+            "
+          >
+            @if (!isSaving && !isConvertingPhoto) {
+              {{ editingId != null ? "Guardar cambios" : "Guardar producto" }}
+            } @else if (isConvertingPhoto) {
+              Procesando foto…
+            } @else {
+              Guardando…
+            }
+          </button>
+        </footer>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</section>

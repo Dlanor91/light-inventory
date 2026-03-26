@@ -1,4 +1,78 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+:root {
+  --app-surface: #ffffff;
+  --app-surface-alt: #f0fdfa;
+  --app-text: #0f172a;
+  --app-muted: #64748b;
+  --app-border: rgba(45, 212, 191, 0.22);
+  --app-shadow: 0 0.75rem 2.5rem rgba(15, 23, 42, 0.14);
+  --app-row-alt: #f8fafc;
+  --app-row-hover: #ecfdf5;
+  --app-row-border: rgba(148, 163, 184, 0.28);
+  --app-table-head-start: #14b8a6;
+  --app-table-head-end: #0d9488;
+  --app-accent-strong: #0f766e;
+  --app-on-hero: #f8fafc;
+  --app-on-hero-muted: rgba(248, 250, 252, 0.9);
+}
+
+html {
+  font-size: 100%;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  color: var(--app-text);
+  background: linear-gradient(
+    165deg,
+    #115e59 0%,
+    #0f766e 28%,
+    #134e4a 55%,
+    #164e63 100%
+  );
+  background-attachment: fixed;
+}
+
+.mat-mdc-dialog-container.inventory-detail-panel {
+  --mdc-dialog-container-shape: 1rem;
+}
+
+.mat-toolbar.app-toolbar.mat-primary {
+  background: linear-gradient(90deg, #0f766e 0%, #0d9488 50%, #115e59 100%);
+}
+
+table.inventory-table.mat-mdc-table .mat-mdc-header-row {
+  background: linear-gradient(
+    135deg,
+    var(--app-table-head-start) 0%,
+    var(--app-table-head-end) 100%
+  );
+}
+
+table.inventory-table.mat-mdc-table .mat-mdc-header-cell {
+  color: #f0fdfa;
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+  border-bottom: none;
+}
+
+table.inventory-table.mat-mdc-table tbody .mat-mdc-row:nth-child(even) {
+  background: var(--app-row-alt);
+}
+
+table.inventory-table.mat-mdc-table tbody .mat-mdc-row:hover {
+  background: var(--app-row-hover);
+}
+
+table.inventory-table.mat-mdc-table .mat-mdc-cell {
+  border-bottom-color: var(--app-row-border);
+  vertical-align: middle;
+}

@@ -1,0 +1,190 @@
+<section class="page">
+  <header class="page__header">
+    <section class="page__titles">
+      <h1>Inventario de Luces</h1>
+    </section>
+    <a
+      mat-flat-button
+      color="accent"
+      routerLink="/inventario/nuevo"
+      class="page__add"
+    >
+      <mat-icon aria-hidden="true">add_circle</mat-icon>
+      <span class="page__add-label-full">Agregar</span>
+    </a>
+  </header>
+
+  @if (isLoading) {
+    <section class="page__loading" aria-busy="true" aria-live="polite">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Cargando inventario…</p>
+    </section>
+  } @else if (compactLayout) {
+    <section class="mobile-list" aria-label="Listado de productos">
+      @for (item of items; track trackById($index, item)) {
+        <mat-card appearance="outlined" class="mobile-card">
+          <mat-card-content>
+            <section class="mobile-card__main">
+              @if (item.fotoBase64) {
+                <figure class="thumb">
+                  <img
+                    [src]="item.fotoBase64"
+                    [alt]="'Miniatura de ' + item.nombre"
+                  />
+                </figure>
+              } @else {
+                <span class="thumb-placeholder" aria-hidden="true">—</span>
+              }
+              <section class="mobile-card__text">
+                <h2 class="mobile-card__title">{{ item.nombre }}</h2>
+                <p class="mobile-card__desc">{{ item.descripcion }}</p>
+                <p class="mobile-card__qty">
+                  <strong>Cantidad:</strong> {{ item.cantidad }}
+                </p>
+              </section>
+            </section>
+            <footer class="mobile-card__actions">
+              <button
+                mat-stroked-button
+                type="button"
+                color="primary"
+                (click)="verMas(item)"
+              >
+                <mat-icon aria-hidden="true">visibility</mat-icon>
+                Ver mas
+              </button>
+              <a
+                mat-flat-button
+                color="accent"
+                routerLink="/inventario/editar/{{ item.id }}"
+              >
+                <mat-icon aria-hidden="true">edit</mat-icon>
+                Editar
+              </a>
+              <button
+                mat-flat-button
+                color="warn"
+                type="button"
+                (click)="confirmDelete(item)"
+              >
+                <mat-icon aria-hidden="true">delete</mat-icon>
+                Eliminar
+              </button>
+            </footer>
+          </mat-card-content>
+        </mat-card>
+      } @empty {
+        <mat-card appearance="outlined" class="empty-card">
+          <mat-card-content>
+            <article class="empty-state">
+              <p>No hay productos todavia.</p>
+              <a mat-flat-button color="accent" routerLink="/inventario/nuevo"
+                >Crear el primero</a
+              >
+            </article>
+          </mat-card-content>
+        </mat-card>
+      }
+    </section>
+  } @else {
+    <mat-card appearance="outlined" class="table-card">
+      <mat-card-content class="table-card__inner">
+        <section
+          class="table-wrap"
+          tabindex="0"
+          role="region"
+          aria-label="Tabla de inventario desplazable"
+        >
+          <table mat-table [dataSource]="items" class="inventory-table">
+            <caption class="sr-only">
+              Tabla de productos: producto con imagen nombre y descripcion,
+              cantidad y acciones.
+            </caption>
+
+            <ng-container matColumnDef="producto">
+              <th mat-header-cell *matHeaderCellDef scope="col">Producto</th>
+              <td mat-cell *matCellDef="let item">
+                <section class="product-cell">
+                  @if (item.fotoBase64) {
+                    <figure class="thumb">
+                      <img
+                        [src]="item.fotoBase64"
+                        [alt]="'Miniatura de ' + item.nombre"
+                      />
+                    </figure>
+                  } @else {
+                    <span class="thumb-placeholder" aria-hidden="true">—</span>
+                  }
+                  <section class="product-cell__text">
+                    <h3 class="product-cell__name">{{ item.nombre }}</h3>
+                    <p class="product-cell__desc">{{ item.descripcion }}</p>
+                  </section>
+                </section>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cantidad">
+              <th mat-header-cell *matHeaderCellDef scope="col">Cantidad</th>
+              <td mat-cell *matCellDef="let item" class="cell-qty">
+                {{ item.cantidad }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+              <th mat-header-cell *matHeaderCellDef scope="col">Acciones</th>
+              <td mat-cell *matCellDef="let item">
+                <ul class="action-menu">
+                  <li>
+                    <button
+                      mat-stroked-button
+                      type="button"
+                      color="primary"
+                      (click)="verMas(item)"
+                    >
+                      <mat-icon aria-hidden="true">visibility</mat-icon>
+                      Ver mas
+                    </button>
+                  </li>
+                  <li>
+                    <a mat-button routerLink="/inventario/editar/{{ item.id }}">
+                      <mat-icon aria-hidden="true">edit</mat-icon>
+                      Editar
+                    </a>
+                  </li>
+                  <li>
+                    <button
+                      mat-button
+                      color="warn"
+                      type="button"
+                      (click)="confirmDelete(item)"
+                    >
+                      <mat-icon aria-hidden="true">delete_forever</mat-icon>
+                      Eliminar
+                    </button>
+                  </li>
+                </ul>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+            <tr class="mat-mdc-row empty-row" *matNoDataRow>
+              <td class="mat-mdc-cell" [attr.colspan]="displayedColumns.length">
+                <article class="empty-state">
+                  <p>No hay productos todavia.</p>
+                  <a
+                    mat-flat-button
+                    color="accent"
+                    routerLink="/inventario/nuevo"
+                    >Crear el primero</a
+                  >
+                </article>
+              </td>
+            </tr>
+          </table>
+        </section>
+      </mat-card-content>
+    </mat-card>
+  }
+</section>

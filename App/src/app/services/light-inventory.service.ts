@@ -23,8 +23,22 @@ export class LightInventoryService {
     return response.data;
   }
 
+  async getById(id: number): Promise<LightInventoryResponse> {
+    const response = await this.client.get<LightInventoryResponse>(`/${id}`);
+    return response.data;
+  }
+
   async create(payload: LightInventoryUpsertRequest): Promise<LightInventoryResponse> {
     const response = await this.client.post<LightInventoryResponse>('', payload);
     return response.data;
+  }
+
+  async update(id: number, payload: LightInventoryUpsertRequest): Promise<LightInventoryResponse> {
+    const response = await this.client.put<LightInventoryResponse>(`/${id}`, payload);
+    return response.data;
+  }
+
+  async delete(id: number): Promise<void> {
+    await this.client.delete<void>(`/${id}`);
   }
 }

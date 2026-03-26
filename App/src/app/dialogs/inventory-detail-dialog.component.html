@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>Detalle del producto</h2>
+
+<mat-dialog-content class="detail-body">
+  <mat-card appearance="outlined" class="detail-card">
+    <mat-card-content>
+      <section class="detail-meta">
+        <dl>
+          <dt>Identificador</dt>
+          <dd>{{ data.item.id }}</dd>
+          <dt>Nombre</dt>
+          <dd>{{ data.item.nombre }}</dd>
+          <dt>Cantidad</dt>
+          <dd>{{ data.item.cantidad }}</dd>
+          <dt>Descripcion</dt>
+          <dd class="detail-meta__value">{{ data.item.descripcion }}</dd>
+        </dl>
+      </section>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-divider class="detail-divider"></mat-divider>
+
+  @if (data.item.fotoBase64) {
+    <mat-card appearance="outlined" class="detail-card detail-card--media">
+      <mat-card-content>
+        <figure class="detail-photo">
+          <img
+            [src]="data.item.fotoBase64"
+            [alt]="'Fotografia de ' + data.item.nombre"
+          />
+        </figure>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+    <p class="detail-no-photo">Este producto no tiene imagen cargada.</p>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-flat-button color="primary" type="button" (click)="cerrar()">
+    Cerrar
+  </button>
+</mat-dialog-actions>
