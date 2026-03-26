@@ -16,9 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read #This is required for actions/checkout
-    defaults:
-      run:
-        working-directory: Api
 
     steps:
       - uses: actions/checkout@v4
@@ -30,13 +27,15 @@ jobs:
           distribution: 'microsoft'
 
       - name: Build with Maven
+        working-directory: Api
         run: mvn clean install
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: java-app
-          path: 'target/*.jar'
+          path: 'Api/target/*.jar'
+          if-no-files-found: error
 
   deploy:
     runs-on: ubuntu-latest
