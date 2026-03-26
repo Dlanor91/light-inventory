@@ -46,6 +46,16 @@ public class LightInventoryServiceImp implements LightInventoryService {
         });
     }
 
+    @Override
+    @Transactional
+    public boolean deleteById(Long id) {
+        if (!lightInventoryRepository.existsById(id)) {
+            return false;
+        }
+        lightInventoryRepository.deleteById(id);
+        return true;
+    }
+
     private static void applyRequest(LightInventory entity, LightInventoryUpsertRequest request) {
         entity.setNombre(request.getNombre());
         entity.setDescripcion(request.getDescripcion());

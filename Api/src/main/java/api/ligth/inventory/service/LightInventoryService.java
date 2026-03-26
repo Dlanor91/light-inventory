@@ -15,4 +15,6 @@ public interface LightInventoryService {
     LightInventoryResponse created(LightInventoryUpsertRequest request);
 
     Optional<LightInventoryResponse> update(LightInventoryUpsertRequest request, Long id);
+
+    boolean deleteById(Long id);
 }
