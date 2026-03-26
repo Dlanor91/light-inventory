@@ -12,8 +12,16 @@ export class LightInventoryService {
   private readonly client: AxiosInstance;
 
   constructor() {
+    const isLocal =
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1';
+
+    const apiBaseUrl = isLocal
+      ? 'http://localhost:8096/api/lightInventory'
+      : 'https://light-repository-api-cnhrarbpg0fpdwh7.canadacentral-01.azurewebsites.net/api/lightInventory';
+
     this.client = axios.create({
-      baseURL: 'http://localhost:8096/api/lightInventory',
+      baseURL: apiBaseUrl,
       headers: { 'Content-Type': 'application/json' }
     });
   }

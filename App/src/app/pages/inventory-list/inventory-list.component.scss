@@ -287,6 +287,7 @@
 
   .mobile-card__actions {
     flex-direction: column;
+    flex-wrap: nowrap;
     align-items: stretch;
   }
 
@@ -295,5 +296,24 @@
     width: 100%;
     min-width: 0;
     justify-content: center;
+  }
+}
+
+/* ~245px */
+@media (max-width: 15.3125rem) {
+  .page__header {
+    flex-wrap: nowrap;
+  }
+
+  .page__titles p {
+    display: none;
+  }
+
+  .page__titles h1 {
+    font-size: 1.05rem;
+  }
+
+  .page__add {
+    padding-inline: 0.6rem;
   }
 }
