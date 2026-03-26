@@ -10,6 +10,7 @@ public final class LightInventoryMapper {
 
     public static LightInventoryResponse toResponse(LightInventory entity) {
         return new LightInventoryResponse(
+                entity.getId(),
                 entity.getNombre(),
                 entity.getDescripcion(),
                 entity.getCantidad(),
