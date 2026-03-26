@@ -44,8 +44,8 @@ export class InventoryListComponent implements OnInit, OnDestroy {
   private readonly breakpoint = inject(BreakpointObserver);
   private layoutSub?: Subscription;
 
-  /** ~425px: 26.5625rem a 16px de referencia */
-  private readonly compactQuery = '(max-width: 26.5625rem)';
+  /** ~432px aprox: margen para que muestre "Agregar" bien */
+  private readonly compactQuery = '(max-width: 27rem)';
 
   isLoading = false;
   compactLayout = false;

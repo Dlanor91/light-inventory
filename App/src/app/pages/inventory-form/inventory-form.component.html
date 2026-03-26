@@ -1,12 +1,17 @@
 <section class="page">
   <header class="page__header">
-    <a mat-button routerLink="/inventario" class="page__back">
+    <a
+      mat-stroked-button
+      color="accent"
+      routerLink="/inventario"
+      class="page__back"
+    >
       <mat-icon aria-hidden="true">arrow_back</mat-icon>
-      Volver al listado
+      <span class="page__back-label-full">Volver al listado</span>
     </a>
-    <h1>{{ titulo }}</h1>
-    <p>Completa los datos y adjunta una imagen.</p>
   </header>
+  <h1>{{ titulo }}</h1>
+  <p>Completa los datos y adjunta una imagen.</p>
 
   @if (isLoading) {
     <p class="page__hint" aria-live="polite">Cargando datos del producto…</p>

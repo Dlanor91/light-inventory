@@ -256,7 +256,7 @@
   border-radius: 1rem !important;
 }
 
-@media (max-width: 26.5625rem) {
+@media (max-width: 27rem) {
   .page {
     padding-inline: 0.25rem;
   }
@@ -266,10 +266,16 @@
     align-items: center;
     justify-content: space-between;
     gap: 0.75rem;
+    flex-wrap: nowrap;
   }
 
   .page__titles h1 {
     font-size: 1.25rem;
+  }
+
+  /* A ~376px el subtitulo suele hacer que el boton se vaya a otra linea */
+  .page__titles p {
+    display: none;
   }
 
   .page__add {
@@ -278,10 +284,6 @@
   }
 
   .page__add-label-full {
-    display: none;
-  }
-
-  .page__add-label-short {
     display: inline;
   }
 
